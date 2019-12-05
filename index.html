@@ -32,21 +32,57 @@
         return MONTH_NAMES[monthNumber];
       }
 
-      document.addEventListener("DOMContentLoaded", function() {
-        const now = new Date();
-        let month = now.getMonth();
-        let year = now.getFullYear();
-        console.log(`Initial month[${month}], year: [${year}]`);
+      function render() {
+        console.log(`Rendering month [${_month}], year [${_year}]`);
         document.getElementById("month-year-header").innerHTML = getHeader(
-          month,
-          year
+          _month,
+          _year
         );
+      }
+
+      // Global state variables
+      let _month;
+      let _year;
+
+      document.addEventListener("DOMContentLoaded", function() {
+        // Initialize state
+        const now = new Date();
+        _month = now.getMonth();
+        _year = now.getFullYear();
+
+        render();
+
+        document.getElementById("prev-month").addEventListener("click", () => {
+          // January will wrap around to previous year.
+          if (_month == 0) {
+            _month = 11;
+            _year--;
+          } else {
+            _month--;
+          }
+
+          render();
+        });
+
+        document.getElementById("next-month").addEventListener("click", () => {
+          // December will wrap around to next year.
+          if (_month == 11) {
+            _month = 0;
+            _year++;
+          } else {
+            _month++;
+          }
+
+          render();
+        });
       });
     </script>
   </head>
   <body>
     <div>
       <h1 id="month-year-header"></h1>
+      <button id="prev-month">-</button>
+      <button id="next-month">+</button>
     </div>
   </body>
 </html>
