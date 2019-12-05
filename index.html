@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <title>Vanilla.JS Calendar Widget</title>
 
+    <style>
+      #calendar {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto;
+      }
+    </style>
     <script>
       const MONTH_NAMES = [
         "January",
@@ -19,6 +25,10 @@
         "November",
         "December"
       ];
+      const NUM_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+      const sum = arr => arr.reduce((a, b) => a + b, 0);
+      console.assert(sum(NUM_DAYS) == 365);
 
       /**
        * @return string `$MONTH $YEAR`
@@ -32,12 +42,43 @@
         return MONTH_NAMES[monthNumber];
       }
 
+      function update() {
+        lookupDays();
+        render();
+      }
       function render() {
         console.log(`Rendering month [${_month}], year [${_year}]`);
         document.getElementById("month-year-header").innerHTML = getHeader(
           _month,
           _year
         );
+      }
+
+      function lookupDays() {
+        const firstOfMonthDate = new Date(_year, _month);
+        const daysInMonth = NUM_DAYS[_month];
+        const firstDayOfWeek = firstOfMonthDate.getDay();
+
+        const cells = [];
+        // Pad cells before first of month with empty spaces.
+        for (let i = 0; i < firstDayOfWeek; i++) {
+          cells[i] = null;
+        }
+        for (let i = 0; i < daysInMonth; i++) {
+          cells[i + firstDayOfWeek] = i + 1;
+        }
+        const gridElements = cells.map(content => {
+          const cell = document.createElement("div");
+          if (!!content) {
+            cell.innerHTML = content;
+          }
+          return cell;
+        });
+
+        document.getElementById("calendar").innerHTML = "";
+        gridElements.forEach(e => {
+          document.getElementById("calendar").appendChild(e);
+        });
       }
 
       // Global state variables
@@ -50,7 +91,7 @@
         _month = now.getMonth();
         _year = now.getFullYear();
 
-        render();
+        update();
 
         document.getElementById("prev-month").addEventListener("click", () => {
           // January will wrap around to previous year.
@@ -61,7 +102,7 @@
             _month--;
           }
 
-          render();
+          update();
         });
 
         document.getElementById("next-month").addEventListener("click", () => {
@@ -73,7 +114,7 @@
             _month++;
           }
 
-          render();
+          update();
         });
       });
     </script>
@@ -83,6 +124,7 @@
       <h1 id="month-year-header"></h1>
       <button id="prev-month">-</button>
       <button id="next-month">+</button>
+      <div id="calendar"></div>
     </div>
   </body>
 </html>
