@@ -11,6 +11,7 @@
       }
     </style>
     <script>
+      const FEBRUARY = 1;
       const MONTH_NAMES = [
         "January",
         "February",
@@ -67,10 +68,20 @@
         });
       }
 
+      function isLeapYear(year) {
+        // https://stackoverflow.com/questions/16353211/check-if-year-is-leap-year-in-javascript
+        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+      }
+
       function placeDaysInCells() {
         const firstOfMonthDate = new Date(_year, _month);
-        const daysInMonth = NUM_DAYS[_month];
         const firstDayOfWeek = firstOfMonthDate.getDay();
+
+        let daysInMonth = NUM_DAYS[_month];
+        if (isLeapYear(_year) && _month == FEBRUARY) {
+          // https://simple.wikipedia.org/wiki/Leap_year
+          daysInMonth = 29;
+        }
 
         // Create elements valued 0...daysOfMonth inclusive
         const cells = [...Array(daysInMonth + 1).keys()];
