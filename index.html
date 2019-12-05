@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vanilla.JS Calendar Widget</title>
+
+    <script>
+      const MONTH_NAMES = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+      /**
+       * @return string `$MONTH $YEAR`
+       */
+      function getHeader(month, year) {
+        return getGregorianMonth(month) + " " + year;
+      }
+
+      function getGregorianMonth(monthNumber) {
+        console.log(`Getting month name for month ${monthNumber}`);
+        return MONTH_NAMES[monthNumber];
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        const now = new Date();
+        let month = now.getMonth();
+        let year = now.getFullYear();
+        console.log(`Initial month[${month}], year: [${year}]`);
+        document.getElementById("month-year-header").innerHTML = getHeader(
+          month,
+          year
+        );
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <h1 id="month-year-header"></h1>
+    </div>
+  </body>
+</html>
