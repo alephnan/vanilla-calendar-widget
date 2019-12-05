@@ -43,7 +43,7 @@
       }
 
       function update() {
-        lookupDays();
+        placeDaysInCells();
         render();
       }
       function render() {
@@ -52,22 +52,8 @@
           _month,
           _year
         );
-      }
 
-      function lookupDays() {
-        const firstOfMonthDate = new Date(_year, _month);
-        const daysInMonth = NUM_DAYS[_month];
-        const firstDayOfWeek = firstOfMonthDate.getDay();
-
-        const cells = [];
-        // Pad cells before first of month with empty spaces.
-        for (let i = 0; i < firstDayOfWeek; i++) {
-          cells[i] = null;
-        }
-        for (let i = 0; i < daysInMonth; i++) {
-          cells[i + firstDayOfWeek] = i + 1;
-        }
-        const gridElements = cells.map(content => {
+        const gridElements = _cellContents.map(content => {
           const cell = document.createElement("div");
           if (!!content) {
             cell.innerHTML = content;
@@ -81,9 +67,26 @@
         });
       }
 
+      function placeDaysInCells() {
+        const firstOfMonthDate = new Date(_year, _month);
+        const daysInMonth = NUM_DAYS[_month];
+        const firstDayOfWeek = firstOfMonthDate.getDay();
+
+        // Create elements valued 0...daysOfMonth inclusive
+        const cells = [...Array(daysInMonth + 1).keys()];
+        // Remove the first element 0.
+        cells.shift();
+        // Pad with empty cells
+        cells.unshift(...new Array(firstDayOfWeek));
+
+        _cellContents = cells;
+      }
+
       // Global state variables
       let _month;
       let _year;
+      // Content of grid cells in calendar.
+      let _cellContents;
 
       document.addEventListener("DOMContentLoaded", function() {
         // Initialize state
