@@ -5,11 +5,29 @@
     <title>Vanilla.JS Calendar Widget</title>
 
     <style>
+      body {
+        font-family: sans-serif;
+      }
+      .column {
+        float: left;
+        margin: 0 10px;
+        overflow: hidden;
+        display: inline;
+      }
+      .row {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       #calendar,
       #calendar-headers {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
         width: 200px;
+      }
+      #calendar-container {
+        border: 1px solid black;
+        padding: 20px;
       }
       #calendar-headers {
         border-bottom: 1px solid grey;
@@ -19,13 +37,14 @@
       .cell:nth-child(7n + 1) {
         color: red;
       }
-      #prev-month,
-      #next-month {
-        background-color: light-grey;
+      button {
+        background-color: grey;
         border-radius: 50%;
         height: 30px;
         width: 30px;
         border-style: none;
+        color: white;
+        cursor: pointer;
       }
     </style>
     <script>
@@ -154,19 +173,25 @@
   </head>
   <body>
     <div>
-      <h1 id="month-year-header"></h1>
-      <button id="prev-month">&lt;&lt;</button>
-      <button id="next-month">&gt;&gt;</button>
-      <div id="calendar-headers">
-        <div class="cell">S</div>
-        <div class="cell">M</div>
-        <div class="cell">T</div>
-        <div class="cell">W</div>
-        <div class="cell">T</div>
-        <div class="cell">F</div>
-        <div class="cell">S</div>
+      <div class="row">
+        <h3 id="month-year-header"></h3>
       </div>
-      <div id="calendar"></div>
+      <div class="row">
+        <button id="prev-month" class="column">&lt;&lt;</button>
+        <div id="calendar-container" class="column">
+          <div id="calendar-headers">
+            <div class="cell">S</div>
+            <div class="cell">M</div>
+            <div class="cell">T</div>
+            <div class="cell">W</div>
+            <div class="cell">T</div>
+            <div class="cell">F</div>
+            <div class="cell">S</div>
+          </div>
+          <div id="calendar"></div>
+        </div>
+        <button id="next-month" class="column">&gt;&gt;</button>
+      </div>
     </div>
   </body>
 </html>
