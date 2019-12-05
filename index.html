@@ -19,6 +19,14 @@
       .cell:nth-child(7n + 1) {
         color: red;
       }
+      #prev-month,
+      #next-month {
+        background-color: light-grey;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        border-style: none;
+      }
     </style>
     <script>
       const FEBRUARY = 1;
@@ -147,8 +155,8 @@
   <body>
     <div>
       <h1 id="month-year-header"></h1>
-      <button id="prev-month">-</button>
-      <button id="next-month">+</button>
+      <button id="prev-month">&lt;&lt;</button>
+      <button id="next-month">&gt;&gt;</button>
       <div id="calendar-headers">
         <div class="cell">S</div>
         <div class="cell">M</div>
