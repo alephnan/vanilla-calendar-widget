@@ -5,17 +5,18 @@
     <title>Vanilla.JS Calendar Widget</title>
 
     <style>
-      #calendar {
+      #calendar,
+      #calendar-headers {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
         width: 200px;
       }
-      /** Saturday Column */
-      #calendar .cell:nth-child(7n) {
-        color: red;
+      #calendar-headers {
+        border-bottom: 1px solid grey;
       }
-      /** Sunday column */
-      #calendar .cell:nth-child(7n + 1) {
+      /** Weekend Columns */
+      .cell:nth-child(7n),
+      .cell:nth-child(7n + 1) {
         color: red;
       }
     </style>
@@ -148,6 +149,15 @@
       <h1 id="month-year-header"></h1>
       <button id="prev-month">-</button>
       <button id="next-month">+</button>
+      <div id="calendar-headers">
+        <div class="cell">S</div>
+        <div class="cell">M</div>
+        <div class="cell">T</div>
+        <div class="cell">W</div>
+        <div class="cell">T</div>
+        <div class="cell">F</div>
+        <div class="cell">S</div>
+      </div>
       <div id="calendar"></div>
     </div>
   </body>
