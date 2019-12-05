@@ -8,6 +8,15 @@
       #calendar {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
+        width: 200px;
+      }
+      /** Saturday Column */
+      #calendar .cell:nth-child(7n) {
+        color: red;
+      }
+      /** Sunday column */
+      #calendar .cell:nth-child(7n + 1) {
+        color: red;
       }
     </style>
     <script>
@@ -59,6 +68,7 @@
           if (!!content) {
             cell.innerHTML = content;
           }
+          cell.className = "cell";
           return cell;
         });
 
